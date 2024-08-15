@@ -38,53 +38,54 @@ namespace SimpleWebScraper
                     AvgTemp.Add(AvgTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for MinTemp
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
+                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[2]/td[{month + 1}]/p[1]");
 
                     MinTemp.Add(MinTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for MaxTemp
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
+                    var MaxTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[3]/td[{month + 1}]/p[1]");
 
-                    MinTemp.Add(MinTempNode.InnerText);
+                    MaxTemp.Add(MaxTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for Precipitation
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
+                    var PrecipitationTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[4]/td[{month + 1}]/p[1]");
 
-                    MinTemp.Add(MinTempNode.InnerText);
+                    Precipitation.Add(PrecipitationTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for Humidity
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
-
-                    MinTemp.Add(MinTempNode.InnerText);
+                    var HumidityTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[5]/td[{month + 1}]");
+                                                                                    
+                    Humidity.Add(HumidityTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for RainyDays
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
+                    var RainyDaysCountTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[6]/td[{month + 1}]");
 
-                    MinTemp.Add(MinTempNode.InnerText);
+                    RainyDaysCount.Add(RainyDaysCountTempNode.InnerText);
                 }
 
-                // TODO: select correct node
+                // extracting nodes for RainyDays
                 for (int month = 1; month <= 12; month++)
                 {
-                    var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
+                    var AvgSunHrsTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[7]/td[{month + 1}]");
 
-                    MinTemp.Add(MinTempNode.InnerText);
+                    AvgSunHrs.Add(AvgSunHrsTempNode.InnerText);
                 }
+
             }
 
 
