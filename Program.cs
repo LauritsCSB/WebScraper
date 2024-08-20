@@ -12,7 +12,6 @@ namespace SimpleWebScraper
             HtmlWeb web = new HtmlWeb();
 
             // creating lists for saving scraped data
-            string areaName = nameNode.InnerText;
             List<string> AvgTemp = new List<string>();
             List<string> MinTemp = new List<string>();
             List<string> MaxTemp = new List<string>();
@@ -29,6 +28,7 @@ namespace SimpleWebScraper
 
                 // selecting node for naming geographical location
                 var nameNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[1]/div/div[4]/div/ol/li[7]/span/span");
+                string areaName = nameNode.InnerText;
 
 
                 // selecting nodes and extracting text for AvgTemp
@@ -89,6 +89,15 @@ namespace SimpleWebScraper
 
             }
 
+            // defining path to database file
+            string database = "C:\\Users\\lauri\\Downloads";
+
+            // checking to see if path is correct
+            if (!File.Exists(database))
+            {
+                Console.WriteLine("Error locating database.");
+                System.Environment.Exit(1);
+            }
 
         }
 
