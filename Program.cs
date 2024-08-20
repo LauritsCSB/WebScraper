@@ -88,36 +88,6 @@ namespace SimpleWebScraper
 
             }
 
-
-            /*// iterating over the list of product HTML elements
-            foreach (var productElement in productHTMLElements)
-            {
-                // scraping logic
-                var url = HtmlEntity.DeEntitize(productElement.QuerySelector("a").Attributes["href"].Value);
-                var image = HtmlEntity.DeEntitize(productElement.QuerySelector("img").Attributes["src"].Value);
-                var name = HtmlEntity.DeEntitize(productElement.QuerySelector("h2").InnerText);
-                var price = HtmlEntity.DeEntitize(productElement.QuerySelector(".price").InnerText);
-
-                //instancing a new product object
-                var product = new Product()
-                {
-                    Url = url,
-                    Image = image,
-                    Name = name,
-                    Price = price
-                };
-
-                // adding the object containing the scraped data to the list
-                products.Add(product);
-            }
-
-            // creating the CSV output file
-            using (var writer = new StreamWriter("products.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                // populating the csv file
-                csv.WriteRecords(products);
-            }*/
         }
 
         public static List<string> DataURLs = new List<string>()
