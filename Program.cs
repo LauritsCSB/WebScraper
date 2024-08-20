@@ -100,8 +100,10 @@ namespace SimpleWebScraper
                 System.Environment.Exit(1);
             }
 
+            // defines new sqlite connection
             var connection = new SqliteConnection("Data Source=" + database);
 
+            // opens or catches new connection
             try
             {
                 connection.Open();
@@ -109,6 +111,51 @@ namespace SimpleWebScraper
             catch (Exception ex)
             {
                 Console.WriteLine("Database Connection Unsuccessfull.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.HelpLink);
+                System.Environment.Exit(1);
+            }
+
+            // TODO update this to fit correct data to read from
+            try
+            {
+                var command = connection.CreateCommand();
+                command.CommandText =
+                @"
+                    SELECT address
+                    FROM soil_data_denmark
+                ";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var address = reader.GetString(0);
+                        //what is int ordinal used in these methods?
+
+                        addressList.Add(address);
+                    }
+                }
+
+                command.CommandText =
+                    @"
+                        SELECT id
+                        FROM address_data_denmark
+                    ";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32(0);
+
+                        idList.Add(id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading data.");
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.HelpLink);
                 System.Environment.Exit(1);
