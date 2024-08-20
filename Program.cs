@@ -11,6 +11,16 @@ namespace SimpleWebScraper
             // creating the HAP object
             HtmlWeb web = new HtmlWeb();
 
+            // creating lists for saving scraped data
+            string areaName = nameNode.InnerText;
+            List<string> AvgTemp = new List<string>();
+            List<string> MinTemp = new List<string>();
+            List<string> MaxTemp = new List<string>();
+            List<string> Precipitation = new List<string>();
+            List<string> Humidity = new List<string>();
+            List<string> RainyDaysCount = new List<string>();
+            List<string> AvgSunHrs = new List<string>();
+
             // looping through URL list to the target web page
             for (int UrlIndex = 0; UrlIndex < DataURLs.Count; UrlIndex++)
             {
@@ -20,15 +30,6 @@ namespace SimpleWebScraper
                 // selecting node for naming geographical location
                 var nameNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[1]/div/div[4]/div/ol/li[7]/span/span");
 
-                // creating lists for saving scraped data
-                string areaName = nameNode.InnerText;
-                List<string> AvgTemp = new List<string>();
-                List<string> MinTemp = new List<string>();
-                List<string> MaxTemp = new List<string>();
-                List<string> Precipitation = new List<string>();
-                List<string> Humidity = new List<string>();
-                List<string> RainyDaysCount = new List<string>();
-                List<string> AvgSunHrs = new List<string>();
 
                 // selecting nodes and extracting text for AvgTemp
                 for (int month = 1; month <= 12; month++)
@@ -87,6 +88,7 @@ namespace SimpleWebScraper
                 }
 
             }
+
 
         }
 
