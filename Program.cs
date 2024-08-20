@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using CsvHelper;
 using System.Globalization;
+using Microsoft.Data.Sqlite;
 
 namespace SimpleWebScraper
 {
@@ -96,6 +97,20 @@ namespace SimpleWebScraper
             if (!File.Exists(database))
             {
                 Console.WriteLine("Error locating database.");
+                System.Environment.Exit(1);
+            }
+
+            var connection = new SqliteConnection("Data Source=" + database);
+
+            try
+            {
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Database Connection Unsuccessfull.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.HelpLink);
                 System.Environment.Exit(1);
             }
 
