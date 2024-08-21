@@ -91,7 +91,7 @@ namespace SimpleWebScraper
             }
 
             // defining path to database file
-            string database = "C:\\Users\\lauri\\Downloads";
+            string database = "C:\Users\lauri\Downloads\soil_data_denmark.sqlite";
 
             // checking to see if path is correct
             if (!File.Exists(database))
