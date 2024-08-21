@@ -21,6 +21,9 @@ namespace SimpleWebScraper
             List<string> RainyDaysCount = new List<string>();
             List<string> AvgSunHrs = new List<string>();
 
+            // defining list for holding row id's to update database rows
+            List<int> idList = new List<int>();
+
             // looping through URL list to the target web page
             for (int UrlIndex = 0; UrlIndex < DataURLs.Count; UrlIndex++)
             {
@@ -91,8 +94,9 @@ namespace SimpleWebScraper
             }
 
             // defining path to database file
-            string database = "C:\Users\lauri\Downloads\soil_data_denmark.sqlite";
+            string database = "/Users/lauri/Downloads/soil_data_denmark.sqlite";
 
+            //TODO throws error when trying to locate database file
             // checking to see if path is correct
             if (!File.Exists(database))
             {
@@ -112,31 +116,13 @@ namespace SimpleWebScraper
             {
                 Console.WriteLine("Database Connection Unsuccessfull.");
                 Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.HelpLink);
                 System.Environment.Exit(1);
             }
 
-            // TODO update this to fit correct data to read from
+            // reads and saves id's from database file to runtime list
             try
             {
                 var command = connection.CreateCommand();
-                command.CommandText =
-                @"
-                    SELECT address
-                    FROM soil_data_denmark
-                ";
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var address = reader.GetString(0);
-                        //what is int ordinal used in these methods?
-
-                        addressList.Add(address);
-                    }
-                }
-
                 command.CommandText =
                     @"
                         SELECT id
@@ -157,7 +143,6 @@ namespace SimpleWebScraper
             {
                 Console.WriteLine("Error reading data.");
                 Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.HelpLink);
                 System.Environment.Exit(1);
             }
 
