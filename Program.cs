@@ -145,9 +145,46 @@ namespace SimpleWebScraper
                 System.Environment.Exit(1);
             }
 
+            //TODO update to write newly scraped data to correct database
+            try
+            {
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    @"
+                        UPDATE address_data_denmark
+                        SET street_name = $street_name,
+                            house_number = $house_number,
+                            city = $city,
+                            postal_code = $postal_code
+                        WHERE id = $id
+                    ";
 
+                for (int listIndex = 0; listIndex < idList.Count; listIndex++)
+                {
+                    using (var cmd = new SqliteCommand(command.CommandText, connection))
+                    {
+                        cmd.Parameters.AddWithValue("$street_name", streetAddressList[listIndex]);
+                        cmd.Parameters.AddWithValue("$house_number", houseNumberList[listIndex]);
+                        cmd.Parameters.AddWithValue("$city", cityList[listIndex]);
+                        cmd.Parameters.AddWithValue("$postal_code", postalCodeList[listIndex]);
+                        cmd.Parameters.AddWithValue("$id", idList[listIndex]);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                Console.WriteLine("Data inserted successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error inserting data.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.HelpLink);
+                System.Environment.Exit(1);
+            }
+            finally
+            {
+                connection.Close();
 
-        }
+            }
 
         public static List<string> DataURLs = new List<string>()
         {
