@@ -96,7 +96,6 @@ namespace SimpleWebScraper
             // defining path to database file
             string database = "/Users/lauri/source/soil_data_denmark.sqlite";
 
-            //TODO throws error when trying to locate database file
             // checking to see if path is correct
             if (!File.Exists(database))
             {
@@ -119,7 +118,7 @@ namespace SimpleWebScraper
                 System.Environment.Exit(1);
             }
 
-            // reads and saves id's from database file to runtime list
+            // reads and saves id's from adress data to runtime list
             try
             {
                 var command = connection.CreateCommand();
@@ -145,6 +144,8 @@ namespace SimpleWebScraper
                 Console.WriteLine(ex.Message);
                 System.Environment.Exit(1);
             }
+
+
 
         }
 
