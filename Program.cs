@@ -94,7 +94,7 @@ namespace SimpleWebScraper
             }
 
             // defining path to database file
-            string database = "/Users/lauri/Downloads/soil_data_denmark.sqlite";
+            string database = "/Users/lauri/source/soil_data_denmark.sqlite";
 
             //TODO throws error when trying to locate database file
             // checking to see if path is correct
