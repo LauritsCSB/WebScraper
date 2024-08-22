@@ -38,7 +38,7 @@ namespace SimpleWebScraper
                 // selecting nodes and extracting text for AvgTemp
                 for (int month = 1; month <= 12; month++)
                 {
-                    var AvgTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month+1}]/p[1]");
+                    var AvgTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
 
                     AvgTemp.Add(AvgTempNode.InnerText);
                 }
@@ -71,7 +71,7 @@ namespace SimpleWebScraper
                 for (int month = 1; month <= 12; month++)
                 {
                     var HumidityTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[5]/td[{month + 1}]");
-                                                                                    
+
                     Humidity.Add(HumidityTempNode.InnerText);
                 }
 
@@ -124,7 +124,7 @@ namespace SimpleWebScraper
                 var command = connection.CreateCommand();
                 command.CommandText =
                     @"
-                        SELECT id
+                        SELECT wineyard_id
                         FROM address_data_denmark
                     ";
 
@@ -144,14 +144,14 @@ namespace SimpleWebScraper
                 Console.WriteLine(ex.Message);
                 System.Environment.Exit(1);
             }
-
+            /*
             //TODO update to write newly scraped data to correct database
             try
             {
                 var command = connection.CreateCommand();
                 command.CommandText =
                     @"
-                        UPDATE address_data_denmark
+                        UPDATE climate_data_denmark
                         SET street_name = $street_name,
                             house_number = $house_number,
                             city = $city,
@@ -184,7 +184,8 @@ namespace SimpleWebScraper
             {
                 connection.Close();
 
-            }
+            }*/
+        }
 
         public static List<string> DataURLs = new List<string>()
         {
