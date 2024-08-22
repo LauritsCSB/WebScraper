@@ -13,13 +13,13 @@ namespace SimpleWebScraper
             HtmlWeb web = new HtmlWeb();
 
             // creating lists for saving scraped data
-            List<string> AvgTemp = new List<string>();
-            List<string> MinTemp = new List<string>();
-            List<string> MaxTemp = new List<string>();
-            List<string> Precipitation = new List<string>();
-            List<string> Humidity = new List<string>();
-            List<string> RainyDaysCount = new List<string>();
-            List<string> AvgSunHrs = new List<string>();
+            List<string> AvgTempDataList = new List<string>();
+            List<string> MinTempDataList = new List<string>();
+            List<string> MaxTempDataList = new List<string>();
+            List<string> PrecipitationDataList = new List<string>();
+            List<string> HumidityDataList = new List<string>();
+            List<string> RainyDaysCountDataList = new List<string>();
+            List<string> AvgSunHrsDataList = new List<string>();
 
             // defining list for holding row id's to update database rows
             List<int> idList = new List<int>();
@@ -92,7 +92,7 @@ namespace SimpleWebScraper
                 {
                     var AvgTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[1]/td[{month + 1}]/p[1]");
 
-                    AvgTemp.Add(AvgTempNode.InnerText);
+                    AvgTempDataList.Add(AvgTempNode.InnerText);
                 }
 
                 // extracting nodes for MinTemp
@@ -100,7 +100,7 @@ namespace SimpleWebScraper
                 {
                     var MinTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[2]/td[{month + 1}]/p[1]");
 
-                    MinTemp.Add(MinTempNode.InnerText);
+                    MinTempDataList.Add(MinTempNode.InnerText);
                 }
 
                 // extracting nodes for MaxTemp
@@ -108,7 +108,7 @@ namespace SimpleWebScraper
                 {
                     var MaxTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[3]/td[{month + 1}]/p[1]");
 
-                    MaxTemp.Add(MaxTempNode.InnerText);
+                    MaxTempDataList.Add(MaxTempNode.InnerText);
                 }
 
                 // extracting nodes for Precipitation
@@ -116,7 +116,7 @@ namespace SimpleWebScraper
                 {
                     var PrecipitationTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[4]/td[{month + 1}]/p[1]");
 
-                    Precipitation.Add(PrecipitationTempNode.InnerText);
+                    PrecipitationDataList.Add(PrecipitationTempNode.InnerText);
                 }
 
                 // extracting nodes for Humidity
@@ -124,7 +124,7 @@ namespace SimpleWebScraper
                 {
                     var HumidityTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[5]/td[{month + 1}]");
 
-                    Humidity.Add(HumidityTempNode.InnerText);
+                    HumidityDataList.Add(HumidityTempNode.InnerText);
                 }
 
                 // extracting nodes for RainyDays
@@ -132,7 +132,7 @@ namespace SimpleWebScraper
                 {
                     var RainyDaysCountTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[6]/td[{month + 1}]");
 
-                    RainyDaysCount.Add(RainyDaysCountTempNode.InnerText);
+                    RainyDaysCountDataList.Add(RainyDaysCountTempNode.InnerText);
                 }
 
                 // extracting nodes for RainyDays
@@ -140,52 +140,83 @@ namespace SimpleWebScraper
                 {
                     var AvgSunHrsTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[7]/td[{month + 1}]");
 
-                    AvgSunHrs.Add(AvgSunHrsTempNode.InnerText);
+                    AvgSunHrsDataList.Add(AvgSunHrsTempNode.InnerText);
                 }
 
-            }
-
-            /*
-            //TODO update to write newly scraped data to correct database
-            try
-            {
-                var command = connection.CreateCommand();
-                command.CommandText =
-                    @"
-                        UPDATE climate_data_denmark
-                        SET street_name = $street_name,
-                            house_number = $house_number,
-                            city = $city,
-                            postal_code = $postal_code
-                        WHERE id = $id
-                    ";
-
-                for (int listIndex = 0; listIndex < idList.Count; listIndex++)
+                //TODO update to write newly scraped data to correct database
+                try
                 {
-                    using (var cmd = new SqliteCommand(command.CommandText, connection))
-                    {
-                        cmd.Parameters.AddWithValue("$street_name", streetAddressList[listIndex]);
-                        cmd.Parameters.AddWithValue("$house_number", houseNumberList[listIndex]);
-                        cmd.Parameters.AddWithValue("$city", cityList[listIndex]);
-                        cmd.Parameters.AddWithValue("$postal_code", postalCodeList[listIndex]);
-                        cmd.Parameters.AddWithValue("$id", idList[listIndex]);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                Console.WriteLine("Data inserted successfully");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error inserting data.");
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.HelpLink);
-                System.Environment.Exit(1);
-            }
-            finally
-            {
-                connection.Close();
+                    var command = connection.CreateCommand();
+                    command.CommandText =
+                        @"
+                            UPDATE climate_data_denmark
+                            SET wineyard_id = $wineyard_id,
+                                jan_avg_temp_c = $jan_avg_temp_c,
+                                feb_avg_temp_c = $feb_avg_temp_c,
+                                mar_avg_temp_c = $mar_avg_temp_c,
+                                apr_avg_temp_c = $apr_avg_temp_c,
+                                may_avg_temp_c = $may_avg_temp_c,
+                                jun_avg_temp_c = $jun_avg_temp_c,
+                                jul_avg_temp_c = $jul_avg_temp_c,
+                                aug_avg_temp_c = $aug_avg_temp_c,
+                                sep_avg_temp_c = $sep_avg_temp_c,
+                                oct_avg_temp_c = $oct_avg_temp_c,
+                                nov_avg_temp_c = $nov_avg_temp_c,
+                                dec_avg_temp_c = $dec_avg_temp_c,
+                            WHERE id = $id
+                        ";
 
-            }*/
+                    for (int listIndex = 0; listIndex < idList.Count; listIndex++)
+                    {
+                        using (var cmd = new SqliteCommand(command.CommandText, connection))
+                        {
+                            cmd.Parameters.AddWithValue("$jan_avg_temp", AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue("$feb_avg_temp", AvgTemp[listIndex + 1]);
+                            cmd.Parameters.AddWithValue("$mar_avg_temp", AvgTemp[listIndex + 2]);
+                            cmd.Parameters.AddWithValue("$apr_avg_temp", AvgTemp[listIndex + 3]);
+                            cmd.Parameters.AddWithValue("$may_avg_temp", AvgTemp[listIndex + 4]);
+                            cmd.Parameters.AddWithValue("$jun_avg_temp", AvgTemp[listIndex + 5]);
+                            cmd.Parameters.AddWithValue("$jul_avg_temp", AvgTemp[listIndex + 6]);
+                            cmd.Parameters.AddWithValue("$aug_avg_temp", AvgTemp[listIndex + 7]);
+                            cmd.Parameters.AddWithValue("$sep_avg_temp", AvgTemp[listIndex + 8]);
+                            cmd.Parameters.AddWithValue("$oct_avg_temp", AvgTemp[listIndex + 9]);
+                            cmd.Parameters.AddWithValue("$nov_avg_temp", AvgTemp[listIndex + 10]);
+                            cmd.Parameters.AddWithValue("$dec_avg_temp", AvgTemp[listIndex + 11]);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    Console.WriteLine("Data inserted successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error inserting data.");
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.HelpLink);
+                    System.Environment.Exit(1);
+                }
+                finally
+                {
+                    connection.Close();
+
+                }*/
+            }
+        }
+
+        public static List<string> AvgTempMonthsList = new List<string>()
+        {
+            "jan_avg_temp_c = $jan_avg_temp_c",
+            "feb_avg_temp_c = $feb_avg_temp_c",
+            "mar_avg_temp_c = $mar_avg_temp_c",
+            "apr_avg_temp_c = $apr_avg_temp_c",
+            "may_avg_temp_c = $may_avg_temp_c",
+            "jun_avg_temp_c = $jun_avg_temp_c",
+            "jul_avg_temp_c = $jul_avg_temp_c",
+            "aug_avg_temp_c = $aug_avg_temp_c",
+            "sep_avg_temp_c = $sep_avg_temp_c",
+            "oct_avg_temp_c = $oct_avg_temp_c",
+            "nov_avg_temp_c = $nov_avg_temp_c",
+            "dec_avg_temp_c = $dec_avg_temp_c",
         }
 
         public static List<string> DataURLs = new List<string>()
