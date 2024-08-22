@@ -24,6 +24,58 @@ namespace SimpleWebScraper
             // defining list for holding row id's to update database rows
             List<int> idList = new List<int>();
 
+            // defining path to database file
+            string database = "/Users/lauri/source/soil_data_denmark.sqlite";
+
+            // checking to see if database path is correct
+            if (!File.Exists(database))
+            {
+                Console.WriteLine("Error locating database.");
+                System.Environment.Exit(1);
+            }
+
+            // defines new sqlite connection
+            var connection = new SqliteConnection("Data Source=" + database);
+
+            // opens or catches new connection
+            try
+            {
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Database Connection Unsuccessfull.");
+                Console.WriteLine(ex.Message);
+                System.Environment.Exit(1);
+            }
+
+            // reads and saves id's from adress data to runtime list
+            try
+            {
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    @"
+                        SELECT wineyard_id
+                        FROM address_data_denmark
+                    ";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32(0);
+
+                        idList.Add(id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading data.");
+                Console.WriteLine(ex.Message);
+                System.Environment.Exit(1);
+            }
+
             // looping through URL list to the target web page
             for (int UrlIndex = 0; UrlIndex < DataURLs.Count; UrlIndex++)
             {
@@ -93,57 +145,6 @@ namespace SimpleWebScraper
 
             }
 
-            // defining path to database file
-            string database = "/Users/lauri/source/soil_data_denmark.sqlite";
-
-            // checking to see if path is correct
-            if (!File.Exists(database))
-            {
-                Console.WriteLine("Error locating database.");
-                System.Environment.Exit(1);
-            }
-
-            // defines new sqlite connection
-            var connection = new SqliteConnection("Data Source=" + database);
-
-            // opens or catches new connection
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Database Connection Unsuccessfull.");
-                Console.WriteLine(ex.Message);
-                System.Environment.Exit(1);
-            }
-
-            // reads and saves id's from adress data to runtime list
-            try
-            {
-                var command = connection.CreateCommand();
-                command.CommandText =
-                    @"
-                        SELECT wineyard_id
-                        FROM address_data_denmark
-                    ";
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var id = reader.GetInt32(0);
-
-                        idList.Add(id);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error reading data.");
-                Console.WriteLine(ex.Message);
-                System.Environment.Exit(1);
-            }
             /*
             //TODO update to write newly scraped data to correct database
             try
