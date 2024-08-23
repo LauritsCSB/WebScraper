@@ -19,7 +19,7 @@ namespace SimpleWebScraper
             List<string> PrecipitationDataList = new List<string>();
             List<string> HumidityDataList = new List<string>();
             List<string> RainyDaysCountDataList = new List<string>();
-            List<string> AvgSunHrsDataList = new List<string>();
+            List<string> SunHrsAvgDataList = new List<string>();
 
             // defining list for holding row id's to update database rows
             List<int> idList = new List<int>();
@@ -135,12 +135,12 @@ namespace SimpleWebScraper
                     RainyDaysCountDataList.Add(RainyDaysCountTempNode.InnerText);
                 }
 
-                // extracting nodes for RainyDays
+                // extracting nodes for SunHours
                 for (int month = 1; month <= 12; month++)
                 {
-                    var AvgSunHrsTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[7]/td[{month + 1}]");
+                    var SunHrsAvgTempNode = htmlDoc.DocumentNode.SelectSingleNode($"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div/article/div/section[3]/table[2]/tbody/tr[7]/td[{month + 1}]");
 
-                    AvgSunHrsDataList.Add(AvgSunHrsTempNode.InnerText);
+                    SunHrsAvgDataList.Add(SunHrsAvgTempNode.InnerText);
                 }
 
                 //TODO update to write newly scraped data to correct database
