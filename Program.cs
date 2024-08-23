@@ -219,6 +219,102 @@ namespace SimpleWebScraper
             "dec_avg_temp_c = $dec_avg_temp_c",
         }
 
+        public static List<string> MinTempMonthsList = new List<string>()
+        {
+            "jan_min_temp_c = $jan_min_temp_c",
+            "feb_min_temp_c = $feb_min_temp_c",
+            "mar_min_temp_c = $mar_min_temp_c",
+            "apr_min_temp_c = $apr_min_temp_c",
+            "may_min_temp_c = $may_min_temp_c",
+            "jun_min_temp_c = $jun_min_temp_c",
+            "jul_min_temp_c = $jul_min_temp_c",
+            "aug_min_temp_c = $aug_min_temp_c",
+            "sep_min_temp_c = $sep_min_temp_c",
+            "oct_min_temp_c = $oct_min_temp_c",
+            "nov_min_temp_c = $nov_min_temp_c",
+            "dec_min_temp_c = $dec_min_temp_c",
+        }
+
+        public static List<string> MaxTempMonthsList = new List<string>()
+        {
+            "jan_max_temp_c = $jan_max_temp_c",
+            "feb_max_temp_c = $feb_max_temp_c",
+            "mar_max_temp_c = $mar_max_temp_c",
+            "apr_max_temp_c = $apr_max_temp_c",
+            "may_max_temp_c = $may_max_temp_c",
+            "jun_max_temp_c = $jun_max_temp_c",
+            "jul_max_temp_c = $jul_max_temp_c",
+            "aug_max_temp_c = $aug_max_temp_c",
+            "sep_max_temp_c = $sep_max_temp_c",
+            "oct_max_temp_c = $oct_max_temp_c",
+            "nov_max_temp_c = $nov_max_temp_c",
+            "dec_max_temp_c = $dec_max_temp_c",
+        }
+
+        public static List<string> PrecipitationMonthsList = new List<string>()
+        {
+            "jan_precipitation_mm = $jan_precipitation_mm",
+            "feb_precipitation_mm = $feb_precipitation_mm",
+            "mar_precipitation_mm = $mar_precipitation_mm",
+            "apr_precipitation_mm = $apr_precipitation_mm",
+            "may_precipitation_mm = $may_precipitation_mm",
+            "jun_precipitation_mm = $jun_precipitation_mm",
+            "jul_precipitation_mm = $jul_precipitation_mm",
+            "aug_precipitation_mm = $aug_precipitation_mm",
+            "sep_precipitation_mm = $sep_precipitation_mm",
+            "oct_precipitation_mm = $oct_precipitation_mm",
+            "nov_precipitation_mm = $nov_precipitation_mm",
+            "dec_precipitation_mm = $dec_precipitation_mm",
+        }
+
+        public static List<string> HumidityMonthsList = new List<string>()
+        {
+            "jan_humidity_percent = $jan_humidity_percent",
+            "feb_humidity_percent = $feb_humidity_percent",
+            "mar_humidity_percent = $mar_humidity_percent",
+            "apr_humidity_percent = $apr_humidity_percent",
+            "may_humidity_percent = $may_humidity_percent",
+            "jun_humidity_percent = $jun_humidity_percent",
+            "jul_humidity_percent = $jul_humidity_percent",
+            "aug_humidity_percent = $aug_humidity_percent",
+            "sep_humidity_percent = $sep_humidity_percent",
+            "oct_humidity_percent = $oct_humidity_percent",
+            "nov_humidity_percent = $nov_humidity_percent",
+            "dec_humidity_percent = $dec_humidity_percent",
+        }
+
+        public static List<string> RainyDaysMonthsList = new List<string>()
+        {
+            "jan_rainy_days = $jan_rainy_days",
+            "feb_rainy_days = $feb_rainy_days",
+            "mar_rainy_days = $mar_rainy_days",
+            "apr_rainy_days = $apr_rainy_days",
+            "may_rainy_days = $may_rainy_days",
+            "jun_rainy_days = $jun_rainy_days",
+            "jul_rainy_days = $jul_rainy_days",
+            "aug_rainy_days = $aug_rainy_days",
+            "sep_rainy_days = $sep_rainy_days",
+            "oct_rainy_days = $oct_rainy_days",
+            "nov_rainy_days = $nov_rainy_days",
+            "dec_rainy_days = $dec_rainy_days",
+        }
+
+        public static List<string> AvgSunHoursMonthsList = new List<string>()
+        {
+            "jan_avg_sun_hours = $jan_avg_sun_hours",
+            "feb_avg_sun_hours = $feb_avg_sun_hours",
+            "mar_avg_sun_hours = $mar_avg_sun_hours",
+            "apr_avg_sun_hours = $apr_avg_sun_hours",
+            "may_avg_sun_hours = $may_avg_sun_hours",
+            "jun_avg_sun_hours = $jun_avg_sun_hours",
+            "jul_avg_sun_hours = $jul_avg_sun_hours",
+            "aug_avg_sun_hours = $aug_avg_sun_hours",
+            "sep_avg_sun_hours = $sep_avg_sun_hours",
+            "oct_avg_sun_hours = $oct_avg_sun_hours",
+            "nov_avg_sun_hours = $nov_avg_sun_hours",
+            "dec_avg_sun_hours = $dec_avg_sun_hours",
+        }
+
         public static List<string> DataURLs = new List<string>()
         {
             "https://en.climate-data.org/europe/denmark/north-denmark-region/godthab-436465/",
