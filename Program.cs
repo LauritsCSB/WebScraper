@@ -148,10 +148,10 @@ namespace SimpleWebScraper
                 {
                     var command = connection.CreateCommand();
                     command.CommandText =
-                        @"
+                        @$"
                             UPDATE climate_data_denmark
                             SET wineyard_id = $wineyard_id,
-                                jan_avg_temp_c = $jan_avg_temp_c,
+                                {AvgTempMonthsList[0]} = $jan_avg_temp_c,
                                 feb_avg_temp_c = $feb_avg_temp_c,
                                 mar_avg_temp_c = $mar_avg_temp_c,
                                 apr_avg_temp_c = $apr_avg_temp_c,
