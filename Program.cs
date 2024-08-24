@@ -147,44 +147,30 @@ namespace SimpleWebScraper
                 try
                 {
                     var command = connection.CreateCommand();
-                    command.CommandText =
-                        @$"
-                            UPDATE climate_data_denmark
-                            SET wineyard_id = $wineyard_id,
-                                {AvgTempMonthsList[0]} = $jan_avg_temp_c,
-                                feb_avg_temp_c = $feb_avg_temp_c,
-                                mar_avg_temp_c = $mar_avg_temp_c,
-                                apr_avg_temp_c = $apr_avg_temp_c,
-                                may_avg_temp_c = $may_avg_temp_c,
-                                jun_avg_temp_c = $jun_avg_temp_c,
-                                jul_avg_temp_c = $jul_avg_temp_c,
-                                aug_avg_temp_c = $aug_avg_temp_c,
-                                sep_avg_temp_c = $sep_avg_temp_c,
-                                oct_avg_temp_c = $oct_avg_temp_c,
-                                nov_avg_temp_c = $nov_avg_temp_c,
-                                dec_avg_temp_c = $dec_avg_temp_c,
-                            WHERE id = $id
-                        ";
 
-                    for (int listIndex = 0; listIndex < idList.Count; listIndex++)
+
+                    for (int listIndex = 0; listIndex < AvgSunHoursMonthsList.Count; listIndex++)
                     {
-                        using (var cmd = new SqliteCommand(command.CommandText, connection))
+                        command.CommandText =
+                            @$"
+                                INSERT INTO climate_data_denmark ({AvgTempMonthsList[listIndex]}, {MinTempMonthsList[listIndex]}, {MaxTempMonthsList[listIndex]}, {PrecipitationMonthsList[listIndex]}, {HumidityMonthsList[listIndex]}, {RainyDaysMonthsList[listIndex]}, {AvgSunHoursMonthsList[listIndex]})
+                                VALUES
+                                ({AvgTempDataList[listIndex]}, {MinTempDataList[listIndex]}, {MaxTempDataList[listIndex]}, {PrecipitationDataList[listIndex]}, {HumidityDataList[listIndex]}, {RainyDaysCountDataList[listIndex]}, {AvgSunHoursMonthsList[listIndex]})
+                            ";
+
+                        /*using (var cmd = new SqliteCommand(command.CommandText, connection))
                         {
-                            cmd.Parameters.AddWithValue("$jan_avg_temp", AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue("$feb_avg_temp", AvgTemp[listIndex + 1]);
-                            cmd.Parameters.AddWithValue("$mar_avg_temp", AvgTemp[listIndex + 2]);
-                            cmd.Parameters.AddWithValue("$apr_avg_temp", AvgTemp[listIndex + 3]);
-                            cmd.Parameters.AddWithValue("$may_avg_temp", AvgTemp[listIndex + 4]);
-                            cmd.Parameters.AddWithValue("$jun_avg_temp", AvgTemp[listIndex + 5]);
-                            cmd.Parameters.AddWithValue("$jul_avg_temp", AvgTemp[listIndex + 6]);
-                            cmd.Parameters.AddWithValue("$aug_avg_temp", AvgTemp[listIndex + 7]);
-                            cmd.Parameters.AddWithValue("$sep_avg_temp", AvgTemp[listIndex + 8]);
-                            cmd.Parameters.AddWithValue("$oct_avg_temp", AvgTemp[listIndex + 9]);
-                            cmd.Parameters.AddWithValue("$nov_avg_temp", AvgTemp[listIndex + 10]);
-                            cmd.Parameters.AddWithValue("$dec_avg_temp", AvgTemp[listIndex + 11]);
+                            cmd.Parameters.AddWithValue(AvgTempMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(MinTempMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(MaxTempMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(PrecipitationMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(HumidityMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(RainyDaysMonthsList[listIndex], AvgTemp[listIndex]);
+                            cmd.Parameters.AddWithValue(AvgSunHoursMonthsList[listIndex], AvgTemp[listIndex]);
 
                             cmd.ExecuteNonQuery();
-                        }
+                        }*/
+                        command.ExecuteNonQuery();
                     }
                     Console.WriteLine("Data inserted successfully");
                 }
@@ -199,7 +185,7 @@ namespace SimpleWebScraper
                 {
                     connection.Close();
 
-                }*/
+                }
             }
         }
 
@@ -217,7 +203,7 @@ namespace SimpleWebScraper
             "oct_avg_temp_c = $oct_avg_temp_c",
             "nov_avg_temp_c = $nov_avg_temp_c",
             "dec_avg_temp_c = $dec_avg_temp_c",
-        }
+        };
 
         public static List<string> MinTempMonthsList = new List<string>()
         {
@@ -233,7 +219,7 @@ namespace SimpleWebScraper
             "oct_min_temp_c = $oct_min_temp_c",
             "nov_min_temp_c = $nov_min_temp_c",
             "dec_min_temp_c = $dec_min_temp_c",
-        }
+        };
 
         public static List<string> MaxTempMonthsList = new List<string>()
         {
@@ -249,7 +235,7 @@ namespace SimpleWebScraper
             "oct_max_temp_c = $oct_max_temp_c",
             "nov_max_temp_c = $nov_max_temp_c",
             "dec_max_temp_c = $dec_max_temp_c",
-        }
+        };
 
         public static List<string> PrecipitationMonthsList = new List<string>()
         {
@@ -265,7 +251,7 @@ namespace SimpleWebScraper
             "oct_precipitation_mm = $oct_precipitation_mm",
             "nov_precipitation_mm = $nov_precipitation_mm",
             "dec_precipitation_mm = $dec_precipitation_mm",
-        }
+        };
 
         public static List<string> HumidityMonthsList = new List<string>()
         {
@@ -281,7 +267,7 @@ namespace SimpleWebScraper
             "oct_humidity_percent = $oct_humidity_percent",
             "nov_humidity_percent = $nov_humidity_percent",
             "dec_humidity_percent = $dec_humidity_percent",
-        }
+        };
 
         public static List<string> RainyDaysMonthsList = new List<string>()
         {
@@ -297,7 +283,7 @@ namespace SimpleWebScraper
             "oct_rainy_days = $oct_rainy_days",
             "nov_rainy_days = $nov_rainy_days",
             "dec_rainy_days = $dec_rainy_days",
-        }
+        };
 
         public static List<string> AvgSunHoursMonthsList = new List<string>()
         {
@@ -313,7 +299,7 @@ namespace SimpleWebScraper
             "oct_avg_sun_hours = $oct_avg_sun_hours",
             "nov_avg_sun_hours = $nov_avg_sun_hours",
             "dec_avg_sun_hours = $dec_avg_sun_hours",
-        }
+        };
 
         public static List<string> DataURLs = new List<string>()
         {
