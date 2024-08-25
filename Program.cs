@@ -148,7 +148,6 @@ namespace SimpleWebScraper
                 {
                     var command = connection.CreateCommand();
 
-
                     for (int listIndex = 0; listIndex < AvgSunHoursMonthsList.Count; listIndex++)
                     {
                         command.CommandText =
@@ -181,12 +180,8 @@ namespace SimpleWebScraper
                     Console.WriteLine(ex.HelpLink);
                     System.Environment.Exit(1);
                 }
-                finally
-                {
-                    connection.Close();
-
-                }
             }
+            connection.Close();
         }
 
         public static List<string> AvgTempMonthsList = new List<string>()
