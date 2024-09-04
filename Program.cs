@@ -156,6 +156,7 @@ namespace SimpleWebScraper
                     SunHrsAvgDataList.Add(SunHrsAvgNode.InnerText);
                 }
 
+                // writes scraped data to database
                 try
                 {
                     var command = connection.CreateCommand();
