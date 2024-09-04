@@ -12,14 +12,6 @@ namespace SimpleWebScraper
             // creating the HAP object
             HtmlWeb web = new HtmlWeb();
 
-            // creating lists for saving scraped data
-            List<string> AvgTempDataList = new List<string>();
-            List<string> MinTempDataList = new List<string>();
-            List<string> MaxTempDataList = new List<string>();
-            List<string> PrecipitationDataList = new List<string>();
-            List<string> HumidityDataList = new List<string>();
-            List<string> RainyDaysCountDataList = new List<string>();
-            List<string> SunHrsAvgDataList = new List<string>();
 
             // defining list for holding row id's to update database rows
             List<int> idList = new List<int>();
@@ -79,6 +71,15 @@ namespace SimpleWebScraper
             // looping through URL list to the target web page
             for (int UrlIndex = 0; UrlIndex < DataURLs.Count; UrlIndex++)
             {
+                // creating lists for saving scraped data
+                List<string> AvgTempDataList = new List<string>();
+                List<string> MinTempDataList = new List<string>();
+                List<string> MaxTempDataList = new List<string>();
+                List<string> PrecipitationDataList = new List<string>();
+                List<string> HumidityDataList = new List<string>();
+                List<string> RainyDaysCountDataList = new List<string>();
+                List<string> SunHrsAvgDataList = new List<string>();
+                
                 var html = $"{DataURLs[UrlIndex]}";
                 var htmlDoc = web.Load(html);
 
@@ -155,32 +156,22 @@ namespace SimpleWebScraper
                     SunHrsAvgDataList.Add(SunHrsAvgNode.InnerText);
                 }
 
-                //TODO update to write newly scraped data to correct database
                 try
                 {
                     var command = connection.CreateCommand();
-                    for (int listIndex = 0; listIndex < AvgSunHoursMonthsList.Count; listIndex++)
+                    for (int listIndex = 0; listIndex < AvgTempMonthsList.Count; listIndex++)
                     {
-                        Console.WriteLine($"{AvgSunHoursMonthsList[listIndex]}");
-                        command.CommandText =
-                            @$"
-                                INSERT INTO climate_data_denmark ({AvgTempMonthsList[listIndex]}, {MinTempMonthsList[listIndex]}, {MaxTempMonthsList[listIndex]}, {PrecipitationMonthsList[listIndex]}, {HumidityMonthsList[listIndex]}, {RainyDaysMonthsList[listIndex]}, {AvgSunHoursMonthsList[listIndex]})
-                                VALUES ({AvgTempDataList[listIndex]}, {MinTempDataList[listIndex]}, {MaxTempDataList[listIndex]}, {PrecipitationDataList[listIndex]}, {HumidityDataList[listIndex]}, {RainyDaysCountDataList[listIndex]}, {AvgSunHoursMonthsList[listIndex]})
-                            ";
-
-                        /*using (var cmd = new SqliteCommand(command.CommandText, connection))
+                        for (int dataPointCounter = 0; dataPointCounter < AvgTempDataList.Count; dataPointCounter++)
                         {
-                            cmd.Parameters.AddWithValue(AvgTempMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(MinTempMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(MaxTempMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(PrecipitationMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(HumidityMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(RainyDaysMonthsList[listIndex], AvgTemp[listIndex]);
-                            cmd.Parameters.AddWithValue(AvgSunHoursMonthsList[listIndex], AvgTemp[listIndex]);
-
-                            cmd.ExecuteNonQuery();
-                        }*/
-                        command.ExecuteNonQuery();
+                            command.CommandText =
+                                @$"
+                                    UPDATE climate_data_denmark
+                                    SET {AvgTempMonthsList[dataPointCounter]} = {AvgTempDataList[dataPointCounter]}, {MinTempMonthsList[dataPointCounter]} = {MinTempDataList[dataPointCounter]}, {MaxTempMonthsList[dataPointCounter]} = {MaxTempDataList[dataPointCounter]}, {PrecipitationMonthsList[dataPointCounter]} = {PrecipitationDataList[dataPointCounter]}, {HumidityMonthsList[dataPointCounter]} = {HumidityDataList[dataPointCounter]}, {RainyDaysMonthsList[dataPointCounter]} = {RainyDaysCountDataList[dataPointCounter]}, {AvgSunHoursMonthsList[dataPointCounter]} = {SunHrsAvgDataList[dataPointCounter]}
+                                    WHERE wineyard_id = {UrlIndex + 1}
+                                ";
+                            
+                            command.ExecuteNonQuery();
+                        }
                     }
                     Console.WriteLine("Data inserted successfully");
                 }
